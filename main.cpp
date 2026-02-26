@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Appliance {
@@ -15,14 +16,15 @@ public:
     }
 
     void display() {
-        cout << "\nAppliance Details\n";
-        cout << "Name: " << name << endl;
-        cout << "Power (W): " << powerRating << endl;
-        cout << "Hours/Day: " << usageHours << endl;
+        cout << "Name: " << name
+             << " | Power: " << powerRating
+             << "W | Hours: " << usageHours << endl;
     }
 };
 
-int main() {
+vector<Appliance> appliances;
+
+void registerAppliance() {
 
     string name;
     float power, hours;
@@ -33,11 +35,51 @@ int main() {
     cout << "Enter power rating (W): ";
     cin >> power;
 
-    cout << "Enter usage hours per day: ";
+    cout << "Enter usage hours/day: ";
     cin >> hours;
 
-    Appliance a1(name, power, hours);
-    a1.display();
+    appliances.push_back(Appliance(name, power, hours));
+
+    cout << "Appliance added successfully.\n";
+}
+
+void viewAppliances() {
+
+    if (appliances.empty()) {
+        cout << "No appliances available.\n";
+        return;
+    }
+
+    for (Appliance a : appliances)
+        a.display();
+}
+
+int main() {
+
+    int choice;
+
+    do {
+        cout << "\n1. Register Appliance\n";
+        cout << "2. View Appliances\n";
+        cout << "3. Exit\n";
+        cout << "Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            registerAppliance();
+            break;
+        case 2:
+            viewAppliances();
+            break;
+        case 3:
+            cout << "Goodbye\n";
+            break;
+        default:
+            cout << "Invalid choice\n";
+        }
+
+    } while (choice != 3);
 
     return 0;
 }
