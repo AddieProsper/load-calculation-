@@ -96,7 +96,7 @@ void calculateBilling() {
     cout << "Total Cost: " << cost << endl;
 }
 
-// 🔹 NEW: Save appliances to file
+// 🔹 Save appliances
 void saveAppliances() {
 
     ofstream file(FILE_NAME);
@@ -110,7 +110,24 @@ void saveAppliances() {
     file.close();
 }
 
+// 🔹 NEW: Load appliances
+void loadAppliances() {
+
+    ifstream file(FILE_NAME);
+
+    string name;
+    float power, hours;
+
+    while (file >> name >> power >> hours) {
+        appliances.push_back(Appliance(name, power, hours));
+    }
+
+    file.close();
+}
+
 int main() {
+
+    loadAppliances();  // 🔹 Load automatically at start
 
     int choice;
 
@@ -139,7 +156,7 @@ int main() {
             calculateBilling();
             break;
         case 5:
-            saveAppliances();   // 🔹 Save before exit
+            saveAppliances();
             cout << "Data saved successfully.\n";
             cout << "Goodbye\n";
             break;
